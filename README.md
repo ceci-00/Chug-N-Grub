@@ -8,7 +8,7 @@ Slideshow url https://docs.google.com/presentation/d/10cNt7wcnExnczDsfYjMJuMLoWA
 drink api https://www.thecocktaildb.com/
 meal api https://www.themealdb.com/
 
-css used tailwind.css
+css used tailwind.css  https://www.geeksforgeeks.org/introduction-to-tailwind-css/
 
 ## User Story
 
