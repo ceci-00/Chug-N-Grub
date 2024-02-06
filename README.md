@@ -33,3 +33,4 @@ THEN I am prompted to decide what type of alcoholic beverage I would like
 WHEN I select what type of alcoholic beverage I would like
 THEN I am presented with several options and recipes for the choosen beverage
 ```
+css used tailwind.css  https://www.geeksforgeeks.org/introduction-to-tailwind-css/
