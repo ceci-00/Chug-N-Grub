@@ -1,6 +1,5 @@
 .button:hover {
     color: white;
   }
-* {
-    bg-red-700 
-}
+
+.hidden {display: block;}
