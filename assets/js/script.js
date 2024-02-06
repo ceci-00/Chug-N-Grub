@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-function toggleModal(){
-    const 
-}
-
-{}
-=======
 
 
 const getDrinkByName = async (name) => {
@@ -15,4 +8,3 @@ const getDrinkByName = async (name) => {
   
   getDrinkByName('margarita')
     .then(data => console.log(data));
->>>>>>> 0196f940fe0e05ecae8078ee5fd5257835512839
