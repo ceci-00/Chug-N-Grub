@@ -1,3 +1,6 @@
+function toggleModal(){
+    const 
+}
 
 
 const getDrinkByName = async (name) => {
@@ -9,3 +12,4 @@ const getDrinkByName = async (name) => {
   getDrinkByName('margarita')
     .then(data => console.log(data));
 
+{}
