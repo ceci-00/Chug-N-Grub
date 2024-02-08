@@ -97,3 +97,4 @@ const displayMealDetails = (meals) => {
 
 getEntreSelection('52944')
     .then(data => console.log(data));
+
