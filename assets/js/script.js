@@ -13,8 +13,7 @@ const getDrinkByName = async (name) => {
         data.drinks.forEach(drink => {
             const drinkElement = document.createElement('div');
             drinkElement.innerHTML = `
-                <h3>${drink.strDrink}</h3>
-                
+                <button class="bg-blue-300"><h3>${drink.strDrink}</h3></button>
                 <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}" width="100">
             `;
             document.getElementById('drink-container').appendChild(drinkElement);
@@ -39,17 +38,17 @@ const getMealByCategory = async (item) => {
         console.log(data);  // Log the data to the console
 
         // Clear previous content
-        document.getElementById('meal-image').innerHTML = '';
+        document.getElementById('meal-container').innerHTML = '';
 
         // Display each meal
         data.meals.forEach(meal => {
             const mealElement = document.createElement('div');
             mealElement.innerHTML = `
-            <button><h3>${meal.strMeal}</h3></button>
+            <button class="bg-blue-200"><h3>${meal.strMeal}</h3></button>
             <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
                 
             `;
-            document.getElementById('meal-image').appendChild(mealElement);
+            document.getElementById('meal-container').appendChild(mealElement);
         });
 
         return data.meals;
