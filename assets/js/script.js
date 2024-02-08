@@ -8,3 +8,7 @@ const getDrinkByName = async (name) => {
   
   getDrinkByName('margarita')
     .then(data => console.log(data));
+
+    const button = document.querySelector("button");
+    
+    button.addEventListener("click", (toggleModal) => )
