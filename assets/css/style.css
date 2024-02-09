@@ -53,7 +53,7 @@
   margin-left: 300px;
 }
 
-img {
+.img {
   float: right;
   height: 215px;
   width: 215px;
@@ -91,6 +91,8 @@ img {
 .w-3 {
   background-color: white
 }
+
+/* .hidden {display: block;} */
 
 .w-4 {
   background-color: white;
