@@ -118,7 +118,7 @@ getMealByCategory('seafood')
         });
     };
     
-}
+
 
 getEntreSelection('52944')
     .then(data => console.log(data));
