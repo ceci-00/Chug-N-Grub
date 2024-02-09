@@ -75,3 +75,23 @@ img {
 .hidden {
   display: block;
 }
+
+.bg-white li {
+  background-color: white;
+}
+
+.block {
+  background-color: white;
+}
+
+.block h1 {
+  background-color: white;
+}
+
+.w-3 {
+  background-color: white
+}
+
+.w-4 {
+  background-color: white;
+}
