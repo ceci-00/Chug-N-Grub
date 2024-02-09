@@ -1,36 +1,50 @@
 * {
-  bg-red-700;
+  background-color: rgb(216, 76, 76);
+  border-radius: 40px;
+  padding-left: 10px;
+}
+
+.box {
+  height: 250px;
+  width: 350px;
 }
 
 .header {
-  font-size: 50px;
+  font-size: 44px;
   text-align: center;
 }
 
 .welcome {
-  font-size: 30px;
+  font-size: 22px;
   text-align: center;
 }
 
 .instructions {
-  font-size: 25px;
+  font-size: 20px;
   text-align: center;
 }
 
+.section {
+  display: inline;
+}
+
 .howTo {
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .container-instructions {
-  font-size: 16px;
+  font-size: 14px;
+  display: inline-block;
+
 }
 
 img {
   float: right;
-}
-
-.startButton {
-
+  height: 275px;
+  width: 275px;
+  padding: 20px;
+  background-color: white;
 }
 
 .button:hover {

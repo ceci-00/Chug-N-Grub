@@ -17,6 +17,8 @@
     <!-- Introduction to Chug-N-Grub -->
     <h1 class="welcome">Welcome to Chug-N-Grub!</h1>
     <h2 class="instructions">Your way to decide what to eat and drink with ease!</h2>
+    <br>
+    <section class="box">
     <!-- Instructions for how it works -->
     <h3 class="howTo">How it works:</h3>
     <div class="container-instructions">
@@ -28,30 +30,32 @@
             <li>Prepare your drink to chug, and enjoy your grub!</li>
         </ul>
     </div>
+    </section>
 
 <img src="assets/images/Chug and Grub Logo.jpg" alt="Chug-N-Grub Logo" />
 
+<br>
+
     <!-- Button to activate modal -->
     <p>Click below to start picking your grub!</p>
-    <div class="startButton">Pick your Grub!</div>
 
 
     <!-- Modal toggle -->
     <button data-modal-target="select-modal"
         class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="button">
-        Toggle modal
+        Pick your Grub!
     </button>
 
     <!-- Main modal -->
-    <div id="select-modal" tabindex="-1" aria-hidden="true"
+    <!-- <div id="select-modal" tabindex="-1" aria-hidden="true" -->
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="bg-white relative p-4 w-full max-w-md max-h-full">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                <div class="bg-white flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="bg-white text-lg font-semibold text-gray-900 dark:text-white">
                         Choose what category you would like for your main meal below!
                     </h3>
                     <button type="button"
@@ -66,7 +70,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <div class="p-4 md:p-5">
+                <div class="bg-white p-4 md:p-5">
                     <ul class="space-y-4 mb-4">
                         <li>
                             <label for="job-1"
@@ -145,25 +149,25 @@
             </div>
         </div>
     </div>
-    <div class="main-nav bg-red-400 flex">
+    <!-- <div class="main-nav bg-red-400 flex">
         <p class="header text-gray-400 text-xxl">Chug-N-Grub</p>
         <nav class="nav-bar">
             <menu>home
-            </menu>
-        </nav>
+            </menu> -->
+        <!-- </nav>
     </div>
     <div class="card1 bg-red-400 flex">
         <img class="items-right" src="" alt="avitar">
         <div class="main-content">
             <p class="textbox text-lg bg-gray-600 width-50rem"> This app is to pick a recipe and get drink suggestions
                 that will match.
-            </p>
+            </p> -->
             <div class="main-cards">
                 <div class="meal-image"></div>
                 <div class="meal-container"></div>
                 <div class="drink-image"></div>
                 <div class="drink-container"></div>
             </div>
-        </div>
+        <!-- </div> -->
 
     </html>
