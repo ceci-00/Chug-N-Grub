@@ -99,3 +99,11 @@ getMealByCategory('seafood')
         });
     };
     
+}
+
+getEntreSelection('52944')
+    .then(data => console.log(data));
+
+    const button = document.querySelector("button");
+    
+    button.addEventListener("click", (toggleModal) => )
