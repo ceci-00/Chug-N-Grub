@@ -117,9 +117,7 @@ getMealByCategory('seafood')
 
 
 
-// const button = document.querySelector("button");
 
-console.log(fetchMealsByCategory)
 
 var button1 = document.querySelector('#poultryBtn')
 button1.addEventListener('click', fetchMealsByCategory)
