@@ -1,34 +1,71 @@
+* {
+  background-color: rgb(216, 76, 76);
+  border-radius: 40px;
+  padding-left: 10px;
+}
 
+.box {
+  height: 250px;
+  width: 350px;
+  margin: 150px;
+}
 
 .header {
-  font-size: 50px;
+  font-size: 44px;
   text-align: center;
 }
 
 .welcome {
-  font-size: 30px;
+  font-size: 22px;
   text-align: center;
 }
 
 .instructions {
-  font-size: 25px;
+  font-size: 20px;
   text-align: center;
+}
+
+.container-instructions ul li {
+  list-style-type: square;
+}
+
+.section {
+  display: inline;
 }
 
 .howTo {
   font-size: 20px;
+  font-weight: bold;
+  margin-left: 450px;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
 
 .container-instructions {
-  font-size: 16px;
+  font-size: 18px;
+  display: inline-block;
+  margin-left: 300px;
+  margin-bottom: 75px;
 }
 
-img {
+.click {
+  font-size: 18px;
+  margin-left: 300px;
+}
+
+.img {
   float: right;
+  height: 215px;
+  width: 215px;
+  padding: 20px;
+  background-color: white;
+  
 }
 
-.startButton {
-
+.little-guy {
+  height: 475px;
+  width: 475px;
+  margin-right: 200px;
 }
 
 .button:hover {
@@ -37,4 +74,26 @@ img {
 
 .hidden {
   display: block;
+}
+
+.bg-white li {
+  background-color: white;
+}
+
+.block {
+  background-color: white;
+}
+
+.block h1 {
+  background-color: white;
+}
+
+.w-3 {
+  background-color: white
+}
+
+/* .hidden {display: block;} */
+
+.w-4 {
+  background-color: white;
 }
