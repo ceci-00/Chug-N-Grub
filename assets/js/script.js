@@ -2,40 +2,40 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
 
     toggleButtons.forEach(function (button) {
-      button.addEventListener('click', function () {
-        const targetModalId = button.getAttribute('data-modal-target');
-        const targetModal = document.getElementById(targetModalId);
+        button.addEventListener('click', function () {
+            const targetModalId = button.getAttribute('data-modal-target');
+            const targetModal = document.getElementById(targetModalId);
 
-        if (targetModal) {
-          // Toggle the "hidden" class to show/hide the modal
-          targetModal.classList.toggle('hidden');
+            if (targetModal) {
+                // Toggle the "hidden" class to show/hide the modal
+                targetModal.classList.toggle('hidden');
 
-          // Optionally, you can also handle other things like setting focus to the modal, etc.
+                // Optionally, you can also handle other things like setting focus to the modal, etc.
 
-          // Prevent the default behavior of the button (e.g., form submission)
-          event.preventDefault();
-        }
-      });
+                // Prevent the default behavior of the button (e.g., form submission)
+                event.preventDefault();
+            }
+        });
     });
-  });
+});
 
-    const closeModalButtons = document.querySelectorAll('[data-modal-close]');
+const closeModalButtons = document.querySelectorAll('[data-modal-close]');
 
-    closeModalButtons.forEach(function (closeButton) {
-      closeButton.addEventListener('click', function (event) {
+closeModalButtons.forEach(function (closeButton) {
+    closeButton.addEventListener('click', function (event) {
         const targetModalId = closeButton.getAttribute('data-modal-target');
         const targetModal = document.getElementById(targetModalId);
-  
+
         if (targetModal) {
-          // Hide the modal
-          targetModal.classList.add('hidden');
-  
-  
-          // Prevent the default behavior of the button
-          event.preventDefault();
+            // Hide the modal
+            targetModal.classList.add('hidden');
+
+
+            // Prevent the default behavior of the button
+            event.preventDefault();
         }
-      });
     });
+});
 
 //drink api by drink
 const getDrinkByName = async (name) => {
@@ -43,10 +43,10 @@ const getDrinkByName = async (name) => {
         const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`);
         const data = await response.json();
         console.log(data);  // Log the data to the console
-        
+
         // Clear previous content
         document.getElementById('drink-container').innerHTML = '';
-        
+
         // Display each drink
         data.drinks.forEach(drink => {
             const drinkElement = document.createElement('div');
@@ -56,7 +56,7 @@ const getDrinkByName = async (name) => {
             `;
             document.getElementById('drink-container').appendChild(drinkElement);
         });
-        
+
         return data.drinks;
     } catch (error) {
         console.log('Error fetching drink:', error);
@@ -73,38 +73,25 @@ const fetchMealsByCategory = async (category) => {
         // Fetch categories to get the ID of the specified category
         const categoriesResponse = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
         const categoriesData = await categoriesResponse.json();
-        // Find the ID of the specified category
-        const categoryId = categoriesData.categories.find(cat => cat.strCategory === category)?.idCategory;
-        if (!categoryId) {
-            console.log(`Category not found.`, category);
-            return;
+        // Find the ID of the chicken category
+        const chickenCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Chicken');
+        console.log(chickenCategory)
+        if (chickenCategory) {
+            // YOU NEED TO POSSIBLY CREATE A DIFFERENT FUNCTION
+            // TO ADD IMG AND H1 IN POULTRYBTN AND HIDE IT WHEN
+            // CALLING THIS NEXT FUNCTION BECAUSE YOU DONT HAVE
+            // ANY TEXTCONTENT TO CHANGE CURRENTLY
+            // OR FIND OUT DIFFERENT WAY TO CHANGE WHAT'S CURRENTLY
+            // IN POULTRY BTN. YOU'LL BE DOING THE SAME THING TO THE OTHERS
+            // if "chicken" category is found, set button text to the category name
+            document.getElementById('poultryBtn').textContent = chickenCategory;
+        } else {
+            console.error('Category "Chicken" not found.');
         }
-        // Fetch meals from the specified category
-        const mealsResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryId}`);
-        const mealsData = await mealsResponse.json();
-        return mealsData.meals;
     } catch (error) {
-        console.log('Error fetching data:', error);
+        console.error('Error fetching categories:', error);
     }
-    // Example: Fetch meals in the "Chicken" category
-    document.getElementById('poultryBtn').innerHTML = 'Chicken';
-
-    // Display each drink
-    data.category.forEach(category => {
-        const poultryList = document.createElement('div');
-        categoriesData.innerHTML = `
-                    <button class="bg-blue-300"><h3>${categories.strCategory}</h3></button>
-                    <img src="${categories.strCategory}" alt="${categories.strCategory}" width="100">
-                `;
-        document.getElementById('poultryBtn').appendChild(categoriesData);
-    });
-    fetchMealsByCategory('Chicken')
-        / then(chickenMeals => console.log(chickenMeals))
 };
-
-.then(data => console.log(data));
-
-
 
 //  document.getElementByClass('block').style.display = 'none'
 // randomize selection
@@ -124,10 +111,10 @@ const getMealByCategory = async (item) => {
         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${item}`);
         const data = await response.json();
         console.log(data);  // Log the data to the console
-        
+
         // Clear previous content
         document.getElementById('meal-container').innerHTML = '';
-        
+
         // Display each meal
         data.meals.forEach(meal => {
             const mealElement = document.createElement('div');
@@ -138,7 +125,7 @@ const getMealByCategory = async (item) => {
             `;
             document.getElementById('meal-container').appendChild(mealElement);
         });
-        
+
         return data.meals;
     } catch (error) {
         console.log('Error fetching meal:', error);
@@ -146,7 +133,7 @@ const getMealByCategory = async (item) => {
 }
 
 getMealByCategory('seafood')
-.then(data => console.log(data));
+    .then(data => console.log(data));
 
 
 
@@ -157,70 +144,70 @@ const getEntreSelection = async (entre) => {
     try {
         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${entre}`);
 
+        var button1 = document.querySelector('#poultryBtn')
+        button1.addEventListener('click', fetchMealsByCategory)
 
-
-
-var button1 = document.querySelector('#poultryBtn')
-button1.addEventListener('click', fetchMealsByCategory)
-=======
-    //final meal slection
-    document.addEventListener('DOMContentLoaded', () => {
-        // Attach click event listener to the button
-        const viewDetailsButton = document.getElementById('viewDetailsButton');
-        viewDetailsButton.addEventListener('click', () => {
-            // Open a new page with meal details
-            window.open('meal-details.html', '_blank');
+        //final meal slection
+        document.addEventListener('DOMContentLoaded', () => {
+            // Attach click event listener to the button
+            const viewDetailsButton = document.getElementById('viewDetailsButton');
+            viewDetailsButton.addEventListener('click', () => {
+                // Open a new page with meal details
+                window.open('meal-details.html', '_blank');
+            });
         });
-    });
-    
-    // Function to get meal details by ID
-    const getMealDetailsById = async (id) => {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
-        const data = await response.json();
-        return data.meals;
-    } catch (error) {
-        console.log('Error fetching meal:', error);
-    }
-}
 
-const displayMealDetails = (meals) => {
-    const mealDetailsContainer = document.getElementById('meal-details');
-    
-    // Clear previous content
-    mealDetailsContainer.innerHTML = '';
-    
-    // Display details
-    meals.forEach(meal => {
-        const mealElement = document.createElement('div');
-        mealElement.innerHTML = `
+        // Function to get meal details by ID
+        const getMealDetailsById = async (id) => {
+            const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+            const data = await response.json();
+            return data.meals;
+        }
+    } catch (error) {
+        console.log('Error fetching meal:', error)
+    }
+
+    const displayMealDetails = (meals) => {
+        const mealDetailsContainer = document.getElementById('meal-details');
+
+        // Clear previous content
+        mealDetailsContainer.innerText = '';
+
+        // Display details
+        meals.forEach(meal => {
+            const mealElement = document.createElement('div');
+            mealElement.innerText = `
         <h3>${meal.strMeal}</h3>
         <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
         <p>${meal.strInstructions}</p>
         `;
-        mealDetailsContainer.appendChild(mealElement);
-    });
-}
+            mealDetailsContainer.appendChild(mealElement);
+        });
+    }
 };
-    
-    // Example: Get meal details for a specific ID
-    getMealDetailsById('52944')
-        .then(data => displayMealDetails(data));
-    
-    // Function to display meal details
-    const displayMealDetails = (meals) => {
-        const mealDetailsContainer = window.open('meal-details.html', '_blank');
-        meals.forEach(meal => {
-            const mealElement = document.createElement('div');
-            mealElement.innerHTML = `
+
+// Example: Get meal details for a specific ID
+// getMealDetailsById('52944')
+//    .then(data => displayMealDetails(data));
+
+// Function to display meal details
+const displayMealDetails = (meals) => {
+    const mealDetailsContainer = window.open('meal-details.html', '_blank');
+    meals.forEach(meal => {
+        const mealElement = document.createElement('div');
+        mealElement.innerHTML = `
                 <h3>${meal.strMeal}</h3>
                 <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
                 <p>${meal.strInstructions}</p>
             `;
-            mealDetailsContainer.document.body.appendChild(mealElement);
-        });
-    };
-    
-getEntreSelection('52944')
-.then(data => console.log(data));
+        mealDetailsContainer.document.body.appendChild(mealElement);
+    });
+};
+// event listener for poultry button
+document.getElementById('poultryBtn').addEventListener('click', fetchMealsByCategory.strCategory)
 
-button.addEventListener("click", (toggleModal) => )
+getEntreSelection('52944')
+    .then(data => console.log(data));
+
+
+// button.addEventListener("click", (toggleModal) => hide)
