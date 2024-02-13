@@ -38,102 +38,137 @@ closeModalButtons.forEach(function (closeButton) {
 });
 
 //drink api by drink
-const getDrinkByName = async (name) => {
-    try {
-        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`);
-        const data = await response.json();
-        console.log(data);  // Log the data to the console
+// const getDrinkByName = async (name) => {
+//     try {
+//         const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`);
+//         const data = await response.json();
+//         console.log(data);  // Log the data to the console
 
-        // Clear previous content
-        document.getElementById('drink-container').innerHTML = '';
+//         // Clear previous content
+//         document.getElementById('drink-container').innerHTML = '';
 
-        // Display each drink
-        data.drinks.forEach(drink => {
-            const drinkElement = document.createElement('div');
-            drinkElement.innerHTML = `
-            <button class="bg-blue-300"><h3>${drink.strDrink}</h3></button>
-            <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}" width="100">
-            `;
-            document.getElementById('drink-container').appendChild(drinkElement);
-        });
+//         // Display each drink
+//         data.drinks.forEach(drink => {
+//             const drinkElement = document.createElement('div');
+//             drinkElement.innerHTML = `
+//             <button class="bg-blue-300"><h3>${drink.strDrink}</h3></button>
+//             <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}" width="100">
+//             `;
+//             document.getElementById('drink-container').appendChild(drinkElement);
+//         });
 
-        return data.drinks;
-    } catch (error) {
-        console.log('Error fetching drink:', error);
-    }
-}
-getDrinkByName('margarita')
+//         return data.drinks;
+//     } catch (error) {
+//         console.log('Error fetching drink:', error);
+//     }
+// }
+// getDrinkByName('margarita')
 
-    .then(data => { console.log(data) });
+//     .then(data => { console.log(data) });
 
 
 
 const fetchMealsByCategory = async (category) => {
     try {
-        // Fetch categories to get the ID of the specified category
-        const categoriesResponse = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
+        const categoriesResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
         const categoriesData = await categoriesResponse.json();
-        // Find the ID of the chicken category
         const chickenCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Chicken');
         console.log(chickenCategory)
         if (chickenCategory) {
-            // YOU NEED TO POSSIBLY CREATE A DIFFERENT FUNCTION
-            // TO ADD IMG AND H1 IN POULTRYBTN AND HIDE IT WHEN
-            // CALLING THIS NEXT FUNCTION BECAUSE YOU DONT HAVE
-            // ANY TEXTCONTENT TO CHANGE CURRENTLY
-            // OR FIND OUT DIFFERENT WAY TO CHANGE WHAT'S CURRENTLY
-            // IN POULTRY BTN. YOU'LL BE DOING THE SAME THING TO THE OTHERS
-            // if "chicken" category is found, set button text to the category name
-            document.getElementById('poultryBtn').textContent = chickenCategory;
+            document.getElementById('poultryBtn').textContent = chickenCategory[0].strCategory;
         } else {
-            console.error('Category "Chicken" not found.');
+            console.error(`Category “Chicken” not found.`);
         }
     } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error(`Error fetching categories:`, error);
     }
 };
 
-//  document.getElementByClass('block').style.display = 'none'
-// randomize selection
-//  $("#lean-meat").innerText.sort(leanMeatList[])
-//  $("#poultry").innerText.sort(poultryList[])
-//  currentQuestionIndex = 0
-//  setNextQuestion()
-
-//  leanMeatList = ['Beef', 'Pork', 'Lamb', 'Goat']
-//  poultryList = ['Chicken', 'Turkey', 'Duck']
-//  seafoodList = ['Fish', 'Crab', 'Lobster', 'Mussels']
-
-
-//meal api but main catagory
-const getMealByCategory = async (item) => {
+const fetchCategoryImages = async (imageURl) => {
     try {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${item}`);
-        const data = await response.json();
-        console.log(data);  // Log the data to the console
-
-        // Clear previous content
-        document.getElementById('meal-container').innerHTML = '';
-
-        // Display each meal
-        data.meals.forEach(meal => {
-            const mealElement = document.createElement('div');
-            mealElement.innerHTML = `
-            <button class="bg-blue-200"><h3>${meal.strMeal}</h3></button>
-            <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
-            
-            `;
-            document.getElementById('meal-container').appendChild(mealElement);
-        });
-
-        return data.meals;
+        const imagesResponse = await fetch('https:\/\/www.themealdb.com\/images\/category\/chicken.png');
+        console.log(imagesResponse)
+        .then((imagesResponse) => imagesResponse.blob())
+        .then((fetchBlob) => {
+            const imageURL = URL.createObjectURL(fetchBlob);
+            const chickenImg = document.querySelector("#poultryImg");
+            chickenImg.src = imageURL;
+        })
     } catch (error) {
-        console.log('Error fetching meal:', error);
+        console.error('Error fetching Image:', error);
     }
 }
 
-getMealByCategory('seafood')
-    .then(data => console.log(data));
+
+//     try {
+//         // Fetch categories to get the ID of the specified category
+//         const categoriesResponse = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
+//         const categoriesData = await categoriesResponse.json();
+//         // Find the ID of the chicken category
+//         const chickenCategory = categoriesData.categories.find(cat => cat.strCategory === 'Chicken');
+//         console.log(chickenCategory)
+//         if (chickenCategory) {
+//             // const chickenImg = chickenCategory.strCategoryThumb;
+//             // const imgElement = document.createElement('img');
+//             // imgElement.src = chickenImg;
+//             // document.body.appendChild(imgElement);
+//             document.getElementById('poultryBtn').textContent = chickenCategory[0].strCategory;
+//         } else {
+//             console.error('Category "Chicken" not found.');
+//         }
+//     } catch (error) {
+//         console.error('Error fetching categories:', error);
+//     }
+// };
+
+//  document.getElementByClass('block').style.display = 'none'
+// randomize selection
+// function fetchMealsByCategory() {
+//      var lmBtn = $("#leanmeatBtn").innerText.sort(leanMeatList[])
+//     //  var pBtn = $("#poultryBtn").innerText.sort(poultryList[])
+//     //  var sfBtn = $("#seafoodBtn").innerText.sort(seafoodList[])
+//     console.log(lmBtn)
+//     var leanMeatList = ['Beef', 'Pork', 'Lamb', 'Goat']
+//     // var poultryList = ['Chicken', 'Turkey', 'Duck']
+//     // var seafoodList = ['Fish', 'Crab', 'Lobster', 'Mussels']
+//     if (lmBtn) {
+//         beefImg = getElementById('leanmeatBtn').createElement('img')
+//         beefImg.src = "https:\/\/www.themealdb.com\/images\/category\/chicken.png"
+
+
+//     }
+// }
+
+
+// //meal api but main catagory
+// const getMealByCategory = async (item) => {
+//     try {
+//         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${item}`);
+//         const data = await response.json();
+//         console.log(data);  // Log the data to the console
+
+//         // Clear previous content
+//         document.getElementById('meal-container').innerHTML = '';
+
+//         // Display each meal
+//         data.meals.forEach(meal => {
+//             const mealElement = document.createElement('div');
+//             mealElement.innerHTML = `
+//             <button class="bg-blue-200"><h3>${meal.strMeal}</h3></button>
+//             <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
+            
+//             `;
+//             document.getElementById('meal-container').appendChild(mealElement);
+//         });
+
+//         return data.meals;
+//     } catch (error) {
+//         console.log('Error fetching meal:', error);
+//     }
+// }
+
+// getMealByCategory('seafood')
+//     .then(data => console.log(data));
 
 
 
@@ -144,8 +179,6 @@ const getEntreSelection = async (entre) => {
     try {
         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${entre}`);
 
-        var button1 = document.querySelector('#poultryBtn')
-        button1.addEventListener('click', fetchMealsByCategory)
 
         //final meal slection
         document.addEventListener('DOMContentLoaded', () => {
@@ -191,23 +224,23 @@ const getEntreSelection = async (entre) => {
 //    .then(data => displayMealDetails(data));
 
 // Function to display meal details
-const displayMealDetails = (meals) => {
-    const mealDetailsContainer = window.open('meal-details.html', '_blank');
-    meals.forEach(meal => {
-        const mealElement = document.createElement('div');
-        mealElement.innerHTML = `
-                <h3>${meal.strMeal}</h3>
-                <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
-                <p>${meal.strInstructions}</p>
-            `;
-        mealDetailsContainer.document.body.appendChild(mealElement);
-    });
-};
-// event listener for poultry button
-document.getElementById('poultryBtn').addEventListener('click', fetchMealsByCategory.strCategory)
+// const displayMealDetails = (meals) => {
+//     const mealDetailsContainer = window.open('meal-details.html', '_blank');
+//     meals.forEach(meal => {
+//         const mealElement = document.createElement('div');
+//         mealElement.innerHTML = `
+//                 <h3>${meal.strMeal}</h3>
+//                 <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
+//                 <p>${meal.strInstructions}</p>
+//             `;
+//         mealDetailsContainer.document.body.appendChild(mealElement);
+//     });
+// };
+// // event listener for poultry button
+document.querySelector('#poultryBtn').addEventListener('click', fetchMealsByCategory)
 
-getEntreSelection('52944')
-    .then(data => console.log(data));
+// getEntreSelection('52944')
+//     .then(data => console.log(data));
 
 
 // button.addEventListener("click", (toggleModal) => hide)
