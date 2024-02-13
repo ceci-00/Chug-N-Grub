@@ -4,11 +4,12 @@
   padding-left: 10px;
 }
 
-.box {
+/* .box {
   height: 250px;
   width: 350px;
   margin: 150px;
-}
+  text-align: center;
+} */
 
 .header {
   font-size: 44px;
@@ -59,13 +60,13 @@
   width: 215px;
   padding: 20px;
   background-color: white;
-
 }
 
 .little-guy {
   height: 475px;
   width: 475px;
   margin-right: 200px;
+  float: right;
 }
 
 .button:hover {
