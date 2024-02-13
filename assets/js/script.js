@@ -88,12 +88,13 @@ const fetchCategoryImages = async (imageURl) => {
     try {
         const imagesResponse = await fetch('https:\/\/www.themealdb.com\/images\/category\/chicken.png');
         console.log(imagesResponse)
-        .then((imagesResponse) => imagesResponse.blob())
-        .then((fetchBlob) => {
-            const imageURL = URL.createObjectURL(fetchBlob);
-            const chickenImg = document.querySelector("#poultryImg");
-            chickenImg.src = imageURL;
-        })
+        // you need to work on this part the then parameter is wrong
+            .then((fetchBlob) => {
+                const imageURL = imagesResponse.createObjectURL(fetchBlob);
+                console.log(imageURL)
+                const chickenImg = document.querySelector("#poultryImg");
+                chickenImg.src = imageURL;
+            })
     } catch (error) {
         console.error('Error fetching Image:', error);
     }
@@ -156,7 +157,7 @@ const fetchCategoryImages = async (imageURl) => {
 //             mealElement.innerHTML = `
 //             <button class="bg-blue-200"><h3>${meal.strMeal}</h3></button>
 //             <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
-            
+
 //             `;
 //             document.getElementById('meal-container').appendChild(mealElement);
 //         });
@@ -238,6 +239,8 @@ const getEntreSelection = async (entre) => {
 // };
 // // event listener for poultry button
 document.querySelector('#poultryBtn').addEventListener('click', fetchMealsByCategory)
+document.querySelector('#poultryBtn').addEventListener('click', fetchCategoryImages)
+
 
 // getEntreSelection('52944')
 //     .then(data => console.log(data));
