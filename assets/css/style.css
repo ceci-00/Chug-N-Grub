@@ -59,7 +59,7 @@
   width: 215px;
   padding: 20px;
   background-color: white;
-  
+
 }
 
 .little-guy {
@@ -69,8 +69,8 @@
 }
 
 .button:hover {
-    color: white;
-  }
+  color: white;
+}
 
 .hidden {
   display: block;
