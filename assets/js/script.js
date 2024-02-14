@@ -79,6 +79,11 @@ const fetchMealsByCategory = async (category) => {
         } else {
             console.error(`Category “Chicken” not found.`);
         }
+        const leanMeatCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Beef','Lamb','Pork','Goat')
+        console.log(leanMeatCategory)
+        if (leanMeatCategory) {
+            document.getElementById('leanmeatBtn').textContent = leanMeatCategory[0].strCategory;
+        }
     } catch (error) {
         console.error(`Error fetching categories:`, error);
     }
@@ -238,6 +243,7 @@ const getEntreSelection = async (entre) => {
 //     });
 // };
 // // event listener for poultry button
+document.querySelector('#leanmeatBtn').addEventListener('click', fetchMealsByCategory)
 document.querySelector('#poultryBtn').addEventListener('click', fetchMealsByCategory)
 document.querySelector('#poultryBtn').addEventListener('click', fetchCategoryImages)
 
