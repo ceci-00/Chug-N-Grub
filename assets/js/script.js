@@ -72,6 +72,13 @@ const fetchMealsByCategory = async (category) => {
     try {
         const categoriesResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
         const categoriesData = await categoriesResponse.json();
+        const leanMeatCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Beef','Lamb','Pork','Goat')
+        console.log(leanMeatCategory)
+        if (leanMeatCategory) {
+            document.getElementById('leanmeatBtn').textContent = leanMeatCategory[0].strCategory;
+        } else {
+            console.error('Category "Lean Meats" not found.');
+        }
         const chickenCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Chicken');
         console.log(chickenCategory)
         if (chickenCategory) {
@@ -79,11 +86,13 @@ const fetchMealsByCategory = async (category) => {
         } else {
             console.error(`Category “Chicken” not found.`);
         }
-        const leanMeatCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Beef','Lamb','Pork','Goat')
-        console.log(leanMeatCategory)
-        if (leanMeatCategory) {
-            document.getElementById('leanmeatBtn').textContent = leanMeatCategory[0].strCategory;
-        }
+        const seafoodCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Seafood');
+        console.log(seafoodCategory)
+        if (seafoodCategory) {
+            document.getElementById('seafoodBtn').textContent = seafoodCategory[0].strCategory;
+        } else {
+            console.error(`Category “Seafood” not found.`);
+        }        
     } catch (error) {
         console.error(`Error fetching categories:`, error);
     }
@@ -246,6 +255,7 @@ const getEntreSelection = async (entre) => {
 document.querySelector('#leanmeatBtn').addEventListener('click', fetchMealsByCategory)
 document.querySelector('#poultryBtn').addEventListener('click', fetchMealsByCategory)
 document.querySelector('#poultryBtn').addEventListener('click', fetchCategoryImages)
+document.querySelector('#seafoodBtn').addEventListener('click', fetchMealsByCategory)
 
 
 // getEntreSelection('52944')
