@@ -92,7 +92,14 @@ const fetchMealsByCategory = async (category) => {
             document.getElementById('seafoodBtn').textContent = seafoodCategory[0].strCategory;
         } else {
             console.error(`Category “Seafood” not found.`);
-        }        
+        }
+        const vegetarianCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Vegetarian');
+        console.log(vegetarianCategory)
+        if (vegetarianCategory) {
+            document.getElementById('vegBtn').textContent = vegetarianCategory[0].strCategory;
+        } else {
+            console.error(`Category “Vegetarian” not found.`);
+        }      
     } catch (error) {
         console.error(`Error fetching categories:`, error);
     }
@@ -256,7 +263,7 @@ document.querySelector('#leanmeatBtn').addEventListener('click', fetchMealsByCat
 document.querySelector('#poultryBtn').addEventListener('click', fetchMealsByCategory)
 document.querySelector('#poultryBtn').addEventListener('click', fetchCategoryImages)
 document.querySelector('#seafoodBtn').addEventListener('click', fetchMealsByCategory)
-
+document.querySelector('#vegBtn').addEventListener('click', fetchMealsByCategory)
 
 // getEntreSelection('52944')
 //     .then(data => console.log(data));
