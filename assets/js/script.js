@@ -68,35 +68,51 @@ closeModalButtons.forEach(function (closeButton) {
 
 
 
-const fetchMealsByCategory = async (category) => {
+const fetchMealsByLeanMeat = async (category) => {
     try {
         const categoriesResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
         const categoriesData = await categoriesResponse.json();
-        const leanMeatCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Beef','Lamb','Pork','Goat')
-        console.log(leanMeatCategory)
+        const leanMeatCategory = categoriesData.categories.find(category => ['Beef', 'Lamb', 'Pork', 'Goat'].includes(category.strCategory));
         if (leanMeatCategory) {
-            document.getElementById('leanmeatBtn').textContent = leanMeatCategory[0].strCategory;
+            document.getElementById('leanmeatBtn').textContent = leanMeatCategory.strCategory;
         } else {
             console.error('Category "Lean Meats" not found.');
         }
-        const chickenCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Chicken');
-        console.log(chickenCategory)
+    } catch (error) {
+        console.error('Error fetching lean meat category:', error);
+    }};
+
+const fetchMealsByPoultry = async (category) => {
+    try {
+        const categoriesResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        const categoriesData = await categoriesResponse.json();        
+        const chickenCategory = categoriesData.categories.find(category => category.strCategory === 'Chicken');
         if (chickenCategory) {
-            document.getElementById('poultryBtn').textContent = chickenCategory[0].strCategory;
+            document.getElementById('poultryBtn').textContent = chickenCategory.strCategory;
+            document.getElementById('poultryBtn').addEventListener('click', () => {
+                // Code to run only when poultryBtn is clicked
+                console.log('Poultry category button clicked');
+            });
         } else {
             console.error(`Category “Chicken” not found.`);
         }
-        const seafoodCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Seafood');
-        console.log(seafoodCategory)
+        const seafoodCategory = categoriesData.categories.find(category => category.strCategory === 'Seafood');
         if (seafoodCategory) {
-            document.getElementById('seafoodBtn').textContent = seafoodCategory[0].strCategory;
+            document.getElementById('seafoodBtn').textContent = seafoodCategory.strCategory;
+            document.getElementById('seafoodBtn').addEventListener('click', () => {
+                // Code to run only when seafoodBtn is clicked
+                console.log('Seafood category button clicked');
+            });
         } else {
             console.error(`Category “Seafood” not found.`);
         }
-        const vegetarianCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Vegetarian');
-        console.log(vegetarianCategory)
+        const vegetarianCategory = categoriesData.categories.find(category => category.strCategory === 'Vegetarian');
         if (vegetarianCategory) {
-            document.getElementById('vegBtn').textContent = vegetarianCategory[0].strCategory;
+            document.getElementById('vegBtn').textContent = vegetarianCategory.strCategory;
+            document.getElementById('vegBtn').addEventListener('click', () => {
+                // Code to run only when vegBtn is clicked
+                console.log('Vegetarian category button clicked');
+            });
         } else {
             console.error(`Category “Vegetarian” not found.`);
         }      
@@ -258,12 +274,8 @@ const getEntreSelection = async (entre) => {
 //         mealDetailsContainer.document.body.appendChild(mealElement);
 //     });
 // };
-// // event listener for poultry button
-document.querySelector('#leanmeatBtn').addEventListener('click', fetchMealsByCategory)
-document.querySelector('#poultryBtn').addEventListener('click', fetchMealsByCategory)
-document.querySelector('#poultryBtn').addEventListener('click', fetchCategoryImages)
-document.querySelector('#seafoodBtn').addEventListener('click', fetchMealsByCategory)
-document.querySelector('#vegBtn').addEventListener('click', fetchMealsByCategory)
+
+document.getElementById('leanmeatBtn').addEventListener('click', fetchMealsByLeanMeat)
 
 // getEntreSelection('52944')
 //     .then(data => console.log(data));
