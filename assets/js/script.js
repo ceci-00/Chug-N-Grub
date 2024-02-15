@@ -156,7 +156,7 @@ function directionModal(meal) {
         <p class = "meal-category">${meal.strCategory}</p>
         <div class = "meal-Directions">
             <h3>Directions:</h3>
-            <p>${meal.strInstructions}</p>
+            <p class="text-4xl">${meal.strInstructions}</p>
         </div>
         <div class = "meal-img">
             <img src = "${meal.strMealThumb}" alt = "">
@@ -181,7 +181,7 @@ const getDrinkByName = async (name) => {
             <div  class="max-w-screen-xl mx-auto p-8 text-center border-bold border-4" data-id="${drink.idDrink}>
             <div class="dimg">
                 <img src="${drink.strDrinkThumb}" alt="drink"></div>
-            <p class="text-6xl text-bold text-center p-8" id="drinksTitle"><h3>${drink.strDrink}</h3></p>
+            <p class="text-6xl text-bold text-center p-8" id="drinksTitle"><h3 clas-s="text-4xl">${drink.strDrink}</h3></p>
            <div class="recipe p-8">${drink.strInstructions}</div>
             </div>
             `;
