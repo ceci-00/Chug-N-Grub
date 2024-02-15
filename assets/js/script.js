@@ -37,177 +37,167 @@ closeModalButtons.forEach(function (closeButton) {
     });
 });
 
+
+const fetchMealsByLeanMeat = async () => {
+    try {
+        const lmResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        const lmData = await lmResponse.json();
+        const leanMeatCategory = lmData.categories.find(category => ['Beef', 'Lamb', 'Pork', 'Goat'].includes(category.strCategory));
+        if (leanMeatCategory) {
+            document.getElementById('leanmeatBtn').textContent = leanMeatCategory.strCategory;
+        } else {
+            console.error('Category "Lean Meats" not found.');
+        }
+    } catch (error) {
+        console.error('Error fetching lean meat category:', error);
+    }};
+
+const fetchMealsByPoultry = async () => {
+    try {
+        const poultryResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        const poultryData = await poultryResponse.json();        
+        const chickenCategory = poultryData.categories.find(category => category.strCategory === 'Chicken');
+        if (chickenCategory) {
+            document.getElementById('poultryBtn').textContent = chickenCategory.strCategory;
+        } else {
+            console.error(`Category “Chicken” not found.`);
+        }
+    } catch (error) {
+        console.error('Error fetching lean meat category:', error);
+    }};
+
+const fetchMealsBySeafood = async () => {
+    try {
+        const seafoodResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        const seafoodData = await seafoodResponse.json();
+        const seafoodCategory = seafoodData.categories.find(category => category.strCategory === 'Seafood');
+        if (seafoodCategory) {
+            document.getElementById('seafoodBtn').textContent = seafoodCategory.strCategory;
+        } else {
+            console.error(`Category “Seafood” not found.`);
+        }
+    } catch (error) {
+        console.error('Error fetching lean meat category:', error);
+    }};
+
+const fetchMealsByVeggies = async () => {
+    try {
+        const vegetarianResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        const vegetarianData = await vegetarianResponse.json();
+        const vegetarianCategory = vegetarianData.categories.find(category => category.strCategory === 'Vegetarian');
+        if (vegetarianCategory) {
+            document.getElementById('vegBtn').textContent = vegetarianCategory.strCategory;
+        } else {
+            console.error(`Category “Vegetarian” not found.`);
+        }      
+    } catch (error) {
+        console.error(`Error fetching categories:`, error);
+    }};
+
+
+const mUl = document.getElementById('m-content');
+const meDC = document.querySelector('.mContent');
+const cBtn = document.getElementById('close-btn');
+// event listeners
+mUl.addEventListener('click', getDirections);
+cBtn.addEventListener('click', () => {
+    meDC.parentElement.classList.remove('viewR');
+});
+// get meal list that matches with the ingredients
+function getMealByCategory(item) {
+    return fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${item}`)
+        .then(response => response.json())
+        .then(data => {
+            let html = "";
+            if (data.meals) {
+                data.meals.slice(0, 4).forEach(meal => {
+                    html += `
+                        <div class="item max-w-screen-xl mx-auto p-8 border-black border-4 " data-id="${meal.idMeal}">
+                            <div class="mimg">
+                                <img src="${meal.strMealThumb}" alt="food">
+                            </div>
+                            <div class="mName text-4xl text-bold text-center">
+                                <h3>${meal.strMeal}</h3>
+                                <a href="#" class="btn5 text-blue-400">Recipe</a>
+                            </div>
+                        </div>
+                    `;
+                });
+                mUl.classList.remove('notFound');
+            } else {
+                html = "Sorry, no meal!";
+                mUl.classList.add('notFound');
+            }
+            mUl.innerHTML = html;
+            return data;
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
+// Usage
+getMealByCategory('seafood')
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+// get recipe of the meal
+function getDirections(e) {
+    e.preventDefault();
+    if (e.target.classList.contains('btn5')) {
+        let mI = e.target.parentElement.parentElement;
+        fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mI.dataset.id}`)
+            .then(response => response.json())
+            .then(data => directionModal(data.meals));
+    }
+}
+// create a modal
+function directionModal(meal) {
+    console.log(meal);
+    meal = meal[0];
+    let html = `
+        <h2 class = "meal-title">${meal.strMeal}</h2>
+        <p class = "meal-category">${meal.strCategory}</p>
+        <div class = "meal-Directions">
+            <h3>Directions:</h3>
+            <p>${meal.strInstructions}</p>
+        </div>
+        <div class = "meal-img">
+            <img src = "${meal.strMealThumb}" alt = "">
+        </div>
+    `;
+    meDC.innerHTML = html;
+    meDC.parentElement.classList.add('viewR');
+}
 //drink api by drink
 const getDrinkByName = async (name) => {
     try {
-        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`);
+        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/random.php
+        `);
         const data = await response.json();
         console.log(data);  // Log the data to the console
-
         // Clear previous content
         document.getElementById('drink-container').innerHTML = '';
-
         // Display each drink
         data.drinks.forEach(drink => {
             const drinkElement = document.createElement('div');
             drinkElement.innerHTML = `
-            <button class="bg-blue-300"><h3>${drink.strDrink}</h3></button>
-            <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}" width="100">
+            <div  class="max-w-screen-xl mx-auto p-8 text-center border-bold border-4" data-id="${drink.idDrink}>
+            <div class="dimg">
+                <img src="${drink.strDrinkThumb}" alt="drink"></div>
+            <p class="text-6xl text-bold text-center p-8" id="drinksTitle"><h3>${drink.strDrink}</h3></p>
+           <div class="recipe p-8">${drink.strInstructions}</div>
+            </div>
             `;
             document.getElementById('drink-container').appendChild(drinkElement);
         });
-
         return data.drinks;
     } catch (error) {
         console.log('Error fetching drink:', error);
     }
 }
-getDrinkByName('margarita')
-
+getDrinkByName()
     .then(data => { console.log(data) });
 
 
+document.getElementById('leanmeatBtn').addEventListener('click', fetchMealsByLeanMeat)
+document.getElementById('poultryBtn').addEventListener('click', fetchMealsByPoultry)
+document.getElementById('seafoodBtn').addEventListener('click', fetchMealsBySeafood)
+document.getElementById('vegBtn').addEventListener('click', fetchMealsByVeggies)
 
-const fetchMealsByCategory = async (category) => {
-    try {
-        // Fetch categories to get the ID of the specified category
-        const categoriesResponse = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
-        const categoriesData = await categoriesResponse.json();
-        // Find the ID of the chicken category
-        const chickenCategory = categoriesData.categories.filter(Object => Object.strCategory === 'Chicken');
-        console.log(chickenCategory)
-        if (chickenCategory) {
-            // YOU NEED TO POSSIBLY CREATE A DIFFERENT FUNCTION
-            // TO ADD IMG AND H1 IN POULTRYBTN AND HIDE IT WHEN
-            // CALLING THIS NEXT FUNCTION BECAUSE YOU DONT HAVE
-            // ANY TEXTCONTENT TO CHANGE CURRENTLY
-            // OR FIND OUT DIFFERENT WAY TO CHANGE WHAT'S CURRENTLY
-            // IN POULTRY BTN. YOU'LL BE DOING THE SAME THING TO THE OTHERS
-            // if "chicken" category is found, set button text to the category name
-            document.getElementById('poultryBtn').textContent = chickenCategory;
-        } else {
-            console.error('Category "Chicken" not found.');
-        }
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
-};
-
-//  document.getElementByClass('block').style.display = 'none'
-// randomize selection
-//  $("#lean-meat").innerText.sort(leanMeatList[])
-//  $("#poultry").innerText.sort(poultryList[])
-//  currentQuestionIndex = 0
-//  setNextQuestion()
-
-//  leanMeatList = ['Beef', 'Pork', 'Lamb', 'Goat']
-//  poultryList = ['Chicken', 'Turkey', 'Duck']
-//  seafoodList = ['Fish', 'Crab', 'Lobster', 'Mussels']
-
-
-//meal api but main catagory
-const getMealByCategory = async (item) => {
-    try {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${item}`);
-        const data = await response.json();
-        console.log(data);  // Log the data to the console
-
-        // Clear previous content
-        document.getElementById('meal-container').innerHTML = '';
-
-        // Display each meal
-        data.meals.forEach(meal => {
-            const mealElement = document.createElement('div');
-            mealElement.innerHTML = `
-            <button class="bg-blue-200"><h3>${meal.strMeal}</h3></button>
-            <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
-            
-            `;
-            document.getElementById('meal-container').appendChild(mealElement);
-        });
-
-        return data.meals;
-    } catch (error) {
-        console.log('Error fetching meal:', error);
-    }
-}
-
-getMealByCategory('seafood')
-    .then(data => console.log(data));
-
-
-
-
-
-//final meal slection
-const getEntreSelection = async (entre) => {
-    try {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${entre}`);
-
-        var button1 = document.querySelector('#poultryBtn')
-        button1.addEventListener('click', fetchMealsByCategory)
-
-        //final meal slection
-        document.addEventListener('DOMContentLoaded', () => {
-            // Attach click event listener to the button
-            const viewDetailsButton = document.getElementById('viewDetailsButton');
-            viewDetailsButton.addEventListener('click', () => {
-                // Open a new page with meal details
-                window.open('meal-details.html', '_blank');
-            });
-        });
-
-        // Function to get meal details by ID
-        const getMealDetailsById = async (id) => {
-            const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
-            const data = await response.json();
-            return data.meals;
-        }
-    } catch (error) {
-        console.log('Error fetching meal:', error)
-    }
-
-    const displayMealDetails = (meals) => {
-        const mealDetailsContainer = document.getElementById('meal-details');
-
-        // Clear previous content
-        mealDetailsContainer.innerText = '';
-
-        // Display details
-        meals.forEach(meal => {
-            const mealElement = document.createElement('div');
-            mealElement.innerText = `
-        <h3>${meal.strMeal}</h3>
-        <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
-        <p>${meal.strInstructions}</p>
-        `;
-            mealDetailsContainer.appendChild(mealElement);
-        });
-    }
-};
-
-// Example: Get meal details for a specific ID
-// getMealDetailsById('52944')
-//    .then(data => displayMealDetails(data));
-
-// Function to display meal details
-const displayMealDetails = (meals) => {
-    const mealDetailsContainer = window.open('meal-details.html', '_blank');
-    meals.forEach(meal => {
-        const mealElement = document.createElement('div');
-        mealElement.innerHTML = `
-                <h3>${meal.strMeal}</h3>
-                <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
-                <p>${meal.strInstructions}</p>
-            `;
-        mealDetailsContainer.document.body.appendChild(mealElement);
-    });
-};
-// event listener for poultry button
-document.getElementById('poultryBtn').addEventListener('click', fetchMealsByCategory.strCategory)
-
-getEntreSelection('52944')
-    .then(data => console.log(data));
-
-
-// button.addEventListener("click", (toggleModal) => hide)
