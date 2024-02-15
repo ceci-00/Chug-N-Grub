@@ -1,43 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
     const toggleButtons = document.querySelectorAll('[data-modal-toggle]');
-
     toggleButtons.forEach(function (button) {
         button.addEventListener('click', function () {
             const targetModalId = button.getAttribute('data-modal-target');
             const targetModal = document.getElementById(targetModalId);
-
             if (targetModal) {
                 // Toggle the "hidden" class to show/hide the modal
                 targetModal.classList.toggle('hidden');
-
                 // Optionally, you can also handle other things like setting focus to the modal, etc.
-
                 // Prevent the default behavior of the button (e.g., form submission)
                 event.preventDefault();
             }
         });
     });
 });
-
 const closeModalButtons = document.querySelectorAll('[data-modal-close]');
-
 closeModalButtons.forEach(function (closeButton) {
     closeButton.addEventListener('click', function (event) {
         const targetModalId = closeButton.getAttribute('data-modal-target');
         const targetModal = document.getElementById(targetModalId);
-
         if (targetModal) {
             // Hide the modal
             targetModal.classList.add('hidden');
-
-
             // Prevent the default behavior of the button
             event.preventDefault();
         }
     });
 });
-
-
 const fetchMealsByLeanMeat = async () => {
     try {
         const lmResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
@@ -50,12 +39,12 @@ const fetchMealsByLeanMeat = async () => {
         }
     } catch (error) {
         console.error('Error fetching lean meat category:', error);
-    }};
-
+    }
+};
 const fetchMealsByPoultry = async () => {
     try {
         const poultryResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
-        const poultryData = await poultryResponse.json();        
+        const poultryData = await poultryResponse.json();
         const chickenCategory = poultryData.categories.find(category => category.strCategory === 'Chicken');
         if (chickenCategory) {
             document.getElementById('poultryBtn').textContent = chickenCategory.strCategory;
@@ -64,8 +53,8 @@ const fetchMealsByPoultry = async () => {
         }
     } catch (error) {
         console.error('Error fetching lean meat category:', error);
-    }};
-
+    }
+};
 const fetchMealsBySeafood = async () => {
     try {
         const seafoodResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
@@ -78,8 +67,8 @@ const fetchMealsBySeafood = async () => {
         }
     } catch (error) {
         console.error('Error fetching lean meat category:', error);
-    }};
-
+    }
+};
 const fetchMealsByVeggies = async () => {
     try {
         const vegetarianResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
@@ -89,12 +78,27 @@ const fetchMealsByVeggies = async () => {
             document.getElementById('vegBtn').textContent = vegetarianCategory.strCategory;
         } else {
             console.error(`Category “Vegetarian” not found.`);
-        }      
+        }
     } catch (error) {
         console.error(`Error fetching categories:`, error);
-    }};
-
-
+    }
+};
+document.getElementById('leanmeatBtn').addEventListener('click', function () {
+    const category = this.getAttribute('data-category');
+    getMealByCategory(category);
+});
+document.getElementById('poultryBtn').addEventListener('click', function () {
+    const category = this.getAttribute('data-category');
+    getMealByCategory(category);
+});
+document.getElementById('seafoodBtn').addEventListener('click', function () {
+    const category = this.getAttribute('data-category');
+    getMealByCategory(category);
+});
+document.getElementById('vegBtn').addEventListener('click', function () {
+    const category = this.getAttribute('data-category');
+    getMealByCategory(category);
+});
 const mUl = document.getElementById('m-content');
 const meDC = document.querySelector('.mContent');
 const cBtn = document.getElementById('close-btn');
@@ -194,10 +198,7 @@ const getDrinkByName = async (name) => {
 }
 getDrinkByName()
     .then(data => { console.log(data) });
-
-
 document.getElementById('leanmeatBtn').addEventListener('click', fetchMealsByLeanMeat)
 document.getElementById('poultryBtn').addEventListener('click', fetchMealsByPoultry)
 document.getElementById('seafoodBtn').addEventListener('click', fetchMealsBySeafood)
 document.getElementById('vegBtn').addEventListener('click', fetchMealsByVeggies)
-
