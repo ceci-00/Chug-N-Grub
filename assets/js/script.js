@@ -37,42 +37,42 @@ closeModalButtons.forEach(function (closeButton) {
     });
 });
 
-//drink api by drink
-// const getDrinkByName = async (name) => {
-//     try {
-//         const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`);
-//         const data = await response.json();
-//         console.log(data);  // Log the data to the console
-
-//         // Clear previous content
-//         document.getElementById('drink-container').innerHTML = '';
-
-//         // Display each drink
-//         data.drinks.forEach(drink => {
-//             const drinkElement = document.createElement('div');
-//             drinkElement.innerHTML = `
-//             <button class="bg-blue-300"><h3>${drink.strDrink}</h3></button>
-//             <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}" width="100">
-//             `;
-//             document.getElementById('drink-container').appendChild(drinkElement);
-//         });
-
-//         return data.drinks;
-//     } catch (error) {
-//         console.log('Error fetching drink:', error);
-//     }
-// }
-// getDrinkByName('margarita')
-
-//     .then(data => { console.log(data) });
-
-
-
-const fetchMealsByLeanMeat = async (category) => {
+drink api by drink
+const getDrinkByName = async (name) => {
     try {
-        const categoriesResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
-        const categoriesData = await categoriesResponse.json();
-        const leanMeatCategory = categoriesData.categories.find(category => ['Beef', 'Lamb', 'Pork', 'Goat'].includes(category.strCategory));
+        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${name}`);
+        const data = await response.json();
+        console.log(data);  // Log the data to the console
+
+        // Clear previous content
+        document.getElementById('drink-container').innerHTML = '';
+
+        // Display each drink
+        data.drinks.forEach(drink => {
+            const drinkElement = document.createElement('div');
+            drinkElement.innerHTML = `
+            <button class="bg-blue-300"><h3>${drink.strDrink}</h3></button>
+            <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}" width="100">
+            `;
+            document.getElementById('drink-container').appendChild(drinkElement);
+        });
+
+        return data.drinks;
+    } catch (error) {
+        console.log('Error fetching drink:', error);
+    }
+}
+getDrinkByName('margarita')
+
+    .then(data => { console.log(data) });
+
+
+
+const fetchMealsByLeanMeat = async () => {
+    try {
+        const lmResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        const lmData = await lmResponse.json();
+        const leanMeatCategory = lmData.categories.find(category => ['Beef', 'Lamb', 'Pork', 'Goat'].includes(category.strCategory));
         if (leanMeatCategory) {
             document.getElementById('leanmeatBtn').textContent = leanMeatCategory.strCategory;
         } else {
@@ -82,44 +82,47 @@ const fetchMealsByLeanMeat = async (category) => {
         console.error('Error fetching lean meat category:', error);
     }};
 
-const fetchMealsByPoultry = async (category) => {
+const fetchMealsByPoultry = async () => {
     try {
-        const categoriesResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
-        const categoriesData = await categoriesResponse.json();        
-        const chickenCategory = categoriesData.categories.find(category => category.strCategory === 'Chicken');
+        const poultryResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        const poultryData = await poultryResponse.json();        
+        const chickenCategory = poultryData.categories.find(category => category.strCategory === 'Chicken');
         if (chickenCategory) {
             document.getElementById('poultryBtn').textContent = chickenCategory.strCategory;
-            document.getElementById('poultryBtn').addEventListener('click', () => {
-                // Code to run only when poultryBtn is clicked
-                console.log('Poultry category button clicked');
-            });
         } else {
             console.error(`Category “Chicken” not found.`);
         }
-        const seafoodCategory = categoriesData.categories.find(category => category.strCategory === 'Seafood');
+    } catch (error) {
+        console.error('Error fetching lean meat category:', error);
+    }};
+
+const fetchMealsBySeafood = async () => {
+    try {
+        const seafoodResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        const seafoodData = await seafoodResponse.json();
+        const seafoodCategory = seafoodData.categories.find(category => category.strCategory === 'Seafood');
         if (seafoodCategory) {
             document.getElementById('seafoodBtn').textContent = seafoodCategory.strCategory;
-            document.getElementById('seafoodBtn').addEventListener('click', () => {
-                // Code to run only when seafoodBtn is clicked
-                console.log('Seafood category button clicked');
-            });
         } else {
             console.error(`Category “Seafood” not found.`);
         }
-        const vegetarianCategory = categoriesData.categories.find(category => category.strCategory === 'Vegetarian');
+    } catch (error) {
+        console.error('Error fetching lean meat category:', error);
+    }};
+
+const fetchMealsByVeggies = async () => {
+    try {
+        const vegetarianResponse = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`);
+        const vegetarianData = await vegetarianResponse.json();
+        const vegetarianCategory = vegetarianData.categories.find(category => category.strCategory === 'Vegetarian');
         if (vegetarianCategory) {
             document.getElementById('vegBtn').textContent = vegetarianCategory.strCategory;
-            document.getElementById('vegBtn').addEventListener('click', () => {
-                // Code to run only when vegBtn is clicked
-                console.log('Vegetarian category button clicked');
-            });
         } else {
             console.error(`Category “Vegetarian” not found.`);
         }      
     } catch (error) {
         console.error(`Error fetching categories:`, error);
-    }
-};
+    }};
 
 const fetchCategoryImages = async (imageURl) => {
     try {
@@ -138,75 +141,75 @@ const fetchCategoryImages = async (imageURl) => {
 }
 
 
-//     try {
-//         // Fetch categories to get the ID of the specified category
-//         const categoriesResponse = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
-//         const categoriesData = await categoriesResponse.json();
-//         // Find the ID of the chicken category
-//         const chickenCategory = categoriesData.categories.find(cat => cat.strCategory === 'Chicken');
-//         console.log(chickenCategory)
-//         if (chickenCategory) {
-//             // const chickenImg = chickenCategory.strCategoryThumb;
-//             // const imgElement = document.createElement('img');
-//             // imgElement.src = chickenImg;
-//             // document.body.appendChild(imgElement);
-//             document.getElementById('poultryBtn').textContent = chickenCategory[0].strCategory;
-//         } else {
-//             console.error('Category "Chicken" not found.');
-//         }
-//     } catch (error) {
-//         console.error('Error fetching categories:', error);
-//     }
-// };
+    try {
+        // Fetch categories to get the ID of the specified category
+        const categoriesResponse = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
+        const categoriesData = await categoriesResponse.json();
+        // Find the ID of the chicken category
+        const chickenCategory = categoriesData.categories.find(cat => cat.strCategory === 'Chicken');
+        console.log(chickenCategory)
+        if (chickenCategory) {
+            // const chickenImg = chickenCategory.strCategoryThumb;
+            // const imgElement = document.createElement('img');
+            // imgElement.src = chickenImg;
+            // document.body.appendChild(imgElement);
+            document.getElementById('poultryBtn').textContent = chickenCategory[0].strCategory;
+        } else {
+            console.error('Category "Chicken" not found.');
+        }
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
+};
 
-//  document.getElementByClass('block').style.display = 'none'
-// randomize selection
-// function fetchMealsByCategory() {
-//      var lmBtn = $("#leanmeatBtn").innerText.sort(leanMeatList[])
-//     //  var pBtn = $("#poultryBtn").innerText.sort(poultryList[])
-//     //  var sfBtn = $("#seafoodBtn").innerText.sort(seafoodList[])
-//     console.log(lmBtn)
-//     var leanMeatList = ['Beef', 'Pork', 'Lamb', 'Goat']
-//     // var poultryList = ['Chicken', 'Turkey', 'Duck']
-//     // var seafoodList = ['Fish', 'Crab', 'Lobster', 'Mussels']
-//     if (lmBtn) {
-//         beefImg = getElementById('leanmeatBtn').createElement('img')
-//         beefImg.src = "https:\/\/www.themealdb.com\/images\/category\/chicken.png"
-
-
-//     }
-// }
+ document.getElementByClass('block').style.display = 'none'
+randomize selection
+function fetchMealsByCategory() {
+     var lmBtn = $("#leanmeatBtn").innerText.sort(leanMeatList[])
+    //  var pBtn = $("#poultryBtn").innerText.sort(poultryList[])
+    //  var sfBtn = $("#seafoodBtn").innerText.sort(seafoodList[])
+    console.log(lmBtn)
+    var leanMeatList = ['Beef', 'Pork', 'Lamb', 'Goat']
+    // var poultryList = ['Chicken', 'Turkey', 'Duck']
+    // var seafoodList = ['Fish', 'Crab', 'Lobster', 'Mussels']
+    if (lmBtn) {
+        beefImg = getElementById('leanmeatBtn').createElement('img')
+        beefImg.src = "https:\/\/www.themealdb.com\/images\/category\/chicken.png"
 
 
-// //meal api but main catagory
-// const getMealByCategory = async (item) => {
-//     try {
-//         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${item}`);
-//         const data = await response.json();
-//         console.log(data);  // Log the data to the console
+    }
+}
 
-//         // Clear previous content
-//         document.getElementById('meal-container').innerHTML = '';
 
-//         // Display each meal
-//         data.meals.forEach(meal => {
-//             const mealElement = document.createElement('div');
-//             mealElement.innerHTML = `
-//             <button class="bg-blue-200"><h3>${meal.strMeal}</h3></button>
-//             <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
+//meal api but main catagory
+const getMealByCategory = async (item) => {
+    try {
+        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${item}`);
+        const data = await response.json();
+        console.log(data);  // Log the data to the console
 
-//             `;
-//             document.getElementById('meal-container').appendChild(mealElement);
-//         });
+        // Clear previous content
+        document.getElementById('meal-container').innerHTML = '';
 
-//         return data.meals;
-//     } catch (error) {
-//         console.log('Error fetching meal:', error);
-//     }
-// }
+        // Display each meal
+        data.meals.forEach(meal => {
+            const mealElement = document.createElement('div');
+            mealElement.innerHTML = `
+            <button class="bg-blue-200"><h3>${meal.strMeal}</h3></button>
+            <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
 
-// getMealByCategory('seafood')
-//     .then(data => console.log(data));
+            `;
+            document.getElementById('meal-container').appendChild(mealElement);
+        });
+
+        return data.meals;
+    } catch (error) {
+        console.log('Error fetching meal:', error);
+    }
+}
+
+getMealByCategory('seafood')
+    .then(data => console.log(data));
 
 
 
@@ -257,26 +260,28 @@ const getEntreSelection = async (entre) => {
     }
 };
 
-// Example: Get meal details for a specific ID
-// getMealDetailsById('52944')
-//    .then(data => displayMealDetails(data));
+Example: Get meal details for a specific ID
+getMealDetailsById('52944')
+   .then(data => displayMealDetails(data));
 
-// Function to display meal details
-// const displayMealDetails = (meals) => {
-//     const mealDetailsContainer = window.open('meal-details.html', '_blank');
-//     meals.forEach(meal => {
-//         const mealElement = document.createElement('div');
-//         mealElement.innerHTML = `
-//                 <h3>${meal.strMeal}</h3>
-//                 <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
-//                 <p>${meal.strInstructions}</p>
-//             `;
-//         mealDetailsContainer.document.body.appendChild(mealElement);
-//     });
-// };
+Function to display meal details
+const displayMealDetails = (meals) => {
+    const mealDetailsContainer = window.open('meal-details.html', '_blank');
+    meals.forEach(meal => {
+        const mealElement = document.createElement('div');
+        mealElement.innerHTML = `
+                <h3>${meal.strMeal}</h3>
+                <img src="${meal.strMealThumb}" alt="${meal.strMeal}" width="100">
+                <p>${meal.strInstructions}</p>
+            `;
+        mealDetailsContainer.document.body.appendChild(mealElement);
+    });
+};
 
 document.getElementById('leanmeatBtn').addEventListener('click', fetchMealsByLeanMeat)
-
+document.getElementById('poultryBtn').addEventListener('click', fetchMealsByPoultry)
+document.getElementById('seafoodBtn').addEventListener('click', fetchMealsBySeafood)
+document.getElementById('vegBtn').addEventListener('click', fetchMealsByVeggies)
 // getEntreSelection('52944')
 //     .then(data => console.log(data));
 
